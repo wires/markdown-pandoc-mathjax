@@ -1,13 +1,9 @@
 #! /bin/sh
 
-OUTDIR=build
+OUTDIR=build/pdf
 
 OUTPUT=out.tex
-INPUT=$(cat <<END_OF_INPUT
-chap1.md
-chap2.md
-chap3.md
-END_OF_INPUT)
+INPUT=$(cat inputs.txt)
 
 rm -f src/$OUTPUT
 rm -rf $OUTDIR
@@ -17,4 +13,5 @@ cd src \
 && pandoc --read markdown --write latex --toc \
 	--include-in-header=../headers.tex -s -o $OUTPUT \
 	$INPUT \
-&& latexmk -pdf -output-directory=../$OUTDIR
+&& latexmk -pdf -output-directory=../$OUTDIR \
+&& rm $OUTPUT
